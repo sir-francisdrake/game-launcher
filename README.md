@@ -30,7 +30,7 @@ git clone https://github.com/sir-francisdrake/game-launcher.git \
   ~/.config/omarchy/plugins/io.github.sir-francisdrake.game-launcher
 ```
 
-Then enable the **Game Launcher** bar widget from Omarchy settings (`Super + I` → bar widgets).
+Then enable the **Game Launcher** bar widget from Omarchy settings.
 
 ## Files
 
