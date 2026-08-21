@@ -7,8 +7,8 @@ import "Model.js" as Model
 
 Panel {
   id: root
-  moduleName: "io.github.caideny.game-launcher"
-  ipcTarget: "io.github.caideny.game-launcher"
+  moduleName: "io.github.sir-francisdrake.game-launcher"
+  ipcTarget: "io.github.sir-francisdrake.game-launcher"
   manageIpc: false
 
   property var anchorItem: null

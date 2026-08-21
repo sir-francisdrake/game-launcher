@@ -7,7 +7,7 @@ import "Model.js" as Model
 
 BarWidget {
   id: root
-  moduleName: "io.github.caideny.game-launcher"
+  moduleName: "io.github.sir-francisdrake.game-launcher"
 
   readonly property bool opened: panelLoader.item ? panelLoader.item.opened === true : false
 
@@ -39,7 +39,7 @@ BarWidget {
   }
 
   IpcHandler {
-    target: "io.github.caideny.game-launcher"
+    target: "io.github.sir-francisdrake.game-launcher"
     function open(): void { root.open() }
     function close(): void { root.close() }
     function show(): void { root.open() }
