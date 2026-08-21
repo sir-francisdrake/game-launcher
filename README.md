@@ -26,8 +26,8 @@ A bar widget plugin for [Omarchy](https://omarchy.org) that unifies your game li
 Copy (or clone) this folder into your omarchy plugins directory:
 
 ```sh
-git clone https://github.com/caideny/game-launcher.git \
-  ~/.config/omarchy/plugins/io.github.caideny.game-launcher
+git clone https://github.com/sir-francisdrake/game-launcher.git \
+  ~/.config/omarchy/plugins/io.github.sir-francisdrake.game-launcher
 ```
 
 Then enable the **Game Launcher** bar widget from Omarchy settings (`Super + I` → bar widgets).
