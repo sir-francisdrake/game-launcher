@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "io.github.caideny.game-launcher",
+  "name": "Game Launcher",
+  "version": "1.0.0",
+  "author": "caideny",
+  "description": "Unified game library across Steam, Lutris, Heroic, Bottles, and Flatpak",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Game Launcher",
+    "category": "Gaming",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}
