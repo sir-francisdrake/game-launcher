@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "io.github.sir-francisdrake.game-launcher",
   "name": "Game Launcher",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "caideny",
   "description": "Unified game library across Steam, Lutris, Heroic, Bottles, and Flatpak",
   "kinds": [

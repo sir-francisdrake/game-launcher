@@ -1,3 +1,28 @@
+// ── Validation ───────────────────────────────────────────────────────────────
+// Library metadata is untrusted input (any file on disk can look like a game
+// entry). Identifiers must match these whitelists before they are ever placed
+// into a launch URL or handed to a process.
+
+var NUMERIC_RE = /^\d+$/
+var SAFE_ID_RE = /^[A-Za-z0-9][A-Za-z0-9._-]*$/
+var SAFE_LAUNCH_URL_RE = /^(steam:\/\/rungameid\/\d+|lutris:rungameid\/[A-Za-z0-9._-]+|heroic:\/\/launch\/[A-Za-z0-9._-]+)$/
+
+function isNumericId(id) {
+  return typeof id === "string" && NUMERIC_RE.test(id)
+}
+
+function isSafeId(id) {
+  return typeof id === "string" && SAFE_ID_RE.test(id)
+}
+
+function isSafeLaunchUrl(url) {
+  return typeof url === "string" && SAFE_LAUNCH_URL_RE.test(url)
+}
+
+function isSafeFlatpakId(id) {
+  return isSafeId(id)
+}
+
 // ── Steam ────────────────────────────────────────────────────────────────────
 
 function parseLibraryFoldersVdf(text) {
@@ -30,6 +55,7 @@ function steamGamesFromContent(content, libraryPath) {
   var games = []
   var game = parseAcfFile(content)
   if (game.appid && game.name) {
+    if (!isNumericId(game.appid)) return games
     var lower = game.name.toLowerCase()
     if (lower.indexOf("proton") >= 0) return games
     if (lower.indexOf("steam linux runtime") >= 0) return games
@@ -56,12 +82,14 @@ function parseLutrisJson(text) {
     for (var i = 0; i < list.length; i++) {
       var g = list[i]
       if (!g) continue
+      var gid = String(g.id || g.slug || "")
+      if (!isSafeId(gid)) continue
       games.push({
         name: g.name || g.slug || "Unknown",
-        appid: String(g.id || g.slug || ""),
+        appid: gid,
         launcher: "lutris",
         launcherIcon: "lutris",
-        launchUrl: "lutris:rungameid/" + g.id,
+        launchUrl: "lutris:rungameid/" + gid,
         installPath: g.install_path || "",
         lastPlayed: g.lastplayed || 0,
         runner: g.runner || ""
@@ -83,12 +111,14 @@ function parseHeroicLibrary(text, store) {
       if (!g) continue
       var installed = g.install || g.is_installed || (g.install_path && g.install_path !== "")
       if (!installed) continue
+      var appId = String(g.app_name || g.appId || g.id || "")
+      if (!isSafeId(appId)) continue
       games.push({
         name: g.title || g.app_name || g.name || "Unknown",
-        appid: g.app_name || g.appId || g.id || "",
+        appid: appId,
         launcher: "heroic-" + store,
         launcherIcon: "heroic",
-        launchUrl: "heroic://launch/" + (g.app_name || g.appId || ""),
+        launchUrl: "heroic://launch/" + appId,
         installPath: g.install_path || "",
         lastPlayed: g.lastPlayed || g.last_played || 0,
         store: store
@@ -131,7 +161,7 @@ function parseFlatpakList(text) {
     var line = lines[i].trim()
     if (!line) continue
     var parts = line.split("\t")
-    if (parts.length >= 2) {
+    if (parts.length >= 2 && isSafeFlatpakId(parts[0])) {
       games.push({
         name: parts[1] || parts[0],
         appid: parts[0],

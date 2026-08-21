@@ -102,8 +102,20 @@ Panel {
 
   function launchGame(game) {
     if (!game) return
-    if (game.launchUrl && game.launchUrl !== "") {
-      Quickshell.execDetached(["bash", "-c", "xdg-open " + game.launchUrl])
+    var url = game.launchUrl || ""
+    if (url !== "") {
+      if (game.launcher === "flatpak") {
+        // url is "flatpak run <app-id>"; app-id is whitelist-validated at parse
+        // time and re-checked here. Executed as an argv array, never via a shell.
+        var parts = url.split(" ")
+        if (parts.length === 3 && parts[0] === "flatpak" && parts[1] === "run" && Model.isSafeFlatpakId(parts[2])) {
+          Quickshell.execDetached(["flatpak", "run", parts[2]])
+        }
+      } else if (Model.isSafeLaunchUrl(url)) {
+        // Only known URI schemes with validated payloads reach xdg-open, and
+        // the URL is passed as a single argv element so no shell parsing occurs.
+        Quickshell.execDetached(["xdg-open", url])
+      }
     }
     close()
   }
