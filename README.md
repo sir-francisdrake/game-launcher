@@ -2,6 +2,8 @@
 
 A bar widget plugin for [Omarchy](https://omarchy.org) that unifies your game library across **Steam**, **Lutris**, **Heroic** (Epic/GOG/Amazon), **Bottles**, and **Flatpak** into a single searchable launcher panel.
 
+<img width="736" height="724" alt="image" src="https://github.com/user-attachments/assets/8a2dcee1-b362-4536-9324-a062db389c3a" />
+
 ## Features
 
 - Unified game list aggregated from all supported launchers
